@@ -3,9 +3,10 @@ package code
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
-func GetPathSize(path string) (int64, error) {
+func GetPathSize(path string, all bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -27,6 +28,9 @@ func GetPathSize(path string) (int64, error) {
 		entryInfo, err := entry.Info()
 		if err != nil {
 			return 0, err
+		}
+		if strings.HasPrefix(entry.Name(), ".") && !all {
+			continue
 		}
 		totalSize += entryInfo.Size()
 	}
