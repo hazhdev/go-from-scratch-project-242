@@ -1,6 +1,7 @@
 package code
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -30,4 +31,21 @@ func GetPathSize(path string) (int64, error) {
 		totalSize += entryInfo.Size()
 	}
 	return totalSize, nil
+}
+
+func FormatSize(bytes int64, human bool) string {
+	if !human || bytes < 1024 {
+		return fmt.Sprintf("%dB", bytes)
+	}
+
+	units := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+	value := float64(bytes)
+	unitIndex := 0
+
+	for value >= 1024 && unitIndex < len(units)-1 {
+		value /= 1024
+		unitIndex++
+	}
+
+	return fmt.Sprintf("%.1f%s", value, units[unitIndex])
 }
