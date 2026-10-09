@@ -6,23 +6,26 @@
 
 Учебный проект Хекслета: https://ru.hexlet.io/programs/go
 
-
 ## Стек
 
 - Go
 
 ## Установка
 
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
-
 ```bash
 git clone https://github.com/hazhdev/go-from-scratch-project-242.git
 cd go-from-scratch-project-242
+make build
 ```
 
 ## Использование
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+```bash
+./bin/hexlet-path-size -h
+./bin/hexlet-path-size testdata
+./bin/hexlet-path-size -a testdata
+./bin/hexlet-path-size -H -r -a .
+```
 
 ---
 
