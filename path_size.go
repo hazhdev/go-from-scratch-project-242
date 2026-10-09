@@ -7,7 +7,15 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string, all bool, recursive bool) (int64, error) {
+func GetPathSize(path string, recursive, human, all bool) (string, error) {
+	res, err := getSize(path, all, recursive)
+	if err != nil {
+		return "", err
+	}
+	return formatSize(res, human), nil
+}
+
+func getSize(path string, all bool, recursive bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -31,7 +39,7 @@ func GetPathSize(path string, all bool, recursive bool) (int64, error) {
 
 		if entry.IsDir() {
 			if recursive {
-				subDirSize, err := GetPathSize(fullPath, all, recursive)
+				subDirSize, err := getSize(fullPath, all, recursive)
 				if err != nil {
 					return 0, err
 				}
@@ -51,7 +59,7 @@ func GetPathSize(path string, all bool, recursive bool) (int64, error) {
 	return totalSize, nil
 }
 
-func FormatSize(bytes int64, human bool) string {
+func formatSize(bytes int64, human bool) string {
 	if !human || bytes < 1024 {
 		return fmt.Sprintf("%dB", bytes)
 	}

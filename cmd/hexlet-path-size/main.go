@@ -37,12 +37,11 @@ func main() {
 			human := cmd.Bool("human")
 			all := cmd.Bool("all")
 			recursive := cmd.Bool("recursive")
-			size, err := code.GetPathSize(path, all, recursive)
+			size, err := code.GetPathSize(path, recursive, human, all)
 			if err != nil {
 				return err
 			}
-			formatted := code.FormatSize(size, human)
-			fmt.Printf("%s\t%s\n", formatted, path)
+			fmt.Printf("%s\t%s\n", size, path)
 
 			return nil
 		},
